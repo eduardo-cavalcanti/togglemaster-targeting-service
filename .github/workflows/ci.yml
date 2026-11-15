@@ -18,9 +18,9 @@ concurrency:
 
 env:
   AWS_REGION: us-east-1
-  ECR_REGISTRY: 434271199872.dkr.ecr.us-east-1.amazonaws.com
+  ECR_REGISTRY: 471112561004.dkr.ecr.us-east-1.amazonaws.com
   ECR_REPOSITORY: togglemaster-homolog/targeting-service
-  GITOPS_REPOSITORY: devjean96/togglemaster-gitops
+  GITOPS_REPOSITORY: eduardo-cavalcanti/togglemaster-gitops
 
 jobs:
   build-test:
