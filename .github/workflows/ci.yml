@@ -164,6 +164,14 @@ jobs:
           LOCAL_IMAGE: ${{ steps.image.outputs.local_image }}
         run: |
           remote_image="$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          # Reuse an existing immutable tag when this commit is run again.
+          if aws ecr describe-images --repository-name "$ECR_REPOSITORY" --image-ids "imageTag=$IMAGE_TAG" > /dev/null 2>ecr-image-check.log; then
+            echo "Reusing $remote_image" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          elif ! grep -q 'ImageNotFoundException' ecr-image-check.log; then
+            cat ecr-image-check.log >&2
+            exit 1
+          fi
           docker tag "$LOCAL_IMAGE" "$remote_image"
           docker push "$remote_image"
           echo "Published $remote_image" >> "$GITHUB_STEP_SUMMARY"
