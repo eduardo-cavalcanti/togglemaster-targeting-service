@@ -21,4 +21,4 @@ USER app
 
 EXPOSE 8083
 
-CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:${PORT:-8083} --workers ${GUNICORN_WORKERS:-2} --threads ${GUNICORN_THREADS:-4} app:app"]
+CMD ["sh", "-c", "gunicorn --access-logfile - --error-logfile - --bind 0.0.0.0:${PORT:-8083} --workers ${GUNICORN_WORKERS:-2} --threads ${GUNICORN_THREADS:-4} app:app"]
